@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../db/users');
+const User = require('../database/users');
+
+router.get('/',async(req, res)=>{
+    res.send('HELLO FROM THE OTHER SIIIIIIDE!!!');
+})
 
 router.post('/signin',async(req, res)=>{
     try{

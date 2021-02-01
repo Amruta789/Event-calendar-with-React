@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Event = require('../db/events');
+const Event = require('../database/events');
 
 router.get('/allevents', async (req, res)=>{
     try{
