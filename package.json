@@ -1,0 +1,30 @@
+{
+  "name": "event-calendar-with-react",
+  "version": "1.0.0",
+  "description": "Backend with Express and MongoDB for the calendar ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amruta789/Event-calendar-with-React.git"
+  },
+  "author": "Amruta J",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Amruta789/Event-calendar-with-React/issues"
+  },
+  "homepage": "https://github.com/Amruta789/Event-calendar-with-React#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.14"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  }
+}
