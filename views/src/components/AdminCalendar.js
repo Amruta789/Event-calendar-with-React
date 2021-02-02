@@ -21,17 +21,17 @@ class AdminCalendar extends Component {
           start: null,
           end: null,
           newevent: null,
-          eventid:null
+          eventid: null
         };       
     }
-    handleChange=(e)=> {
-        this.setState({[e.target.name]: e.target.value})
-    }
+   
+    // Get all the events from database and store in eventslist state variable
     componentDidMount(){
        axios.get("http://localhost:8080/events/allevents/")
        .then((res)=>{
             console.log(res.data);
-            console.log(res.data.events);      
+            console.log(res.data.events);
+            // ISO Date in MongoDB database should be converted to JavaScript Date format for the calendar.      
             res.data.events.forEach(element => {
               element.start=new Date(element.start);
               element.end = new Date(element.end);
@@ -41,11 +41,19 @@ class AdminCalendar extends Component {
             console.log(error);
        })
     }
-    handleCloseAdd = () => this.setState({showAdd: false});
-    handleCloseEdit = () => this.setState({showEdit: false});
+
+    // The methods to open and close "Add event" modal, and "Edit event" modal.
     handleShowAdd = ({ start, end}) => this.setState({ start: start, end: end, showAdd: true});
     handleShowEdit = ({_id, start, end}) => this.setState({eventid: _id, start: start, end: end, showEdit: true});
+    handleCloseAdd = () => this.setState({showAdd: false});
+    handleCloseEdit = () => this.setState({showEdit: false});
     
+    // To store input into corresponding state variable
+    handleChange=(e)=> {
+        this.setState({[e.target.name]: e.target.value})
+    }
+
+    // After Add button is clicked in the "Add event" modal.
     handleAdd = async() => {
         if(this.state.start && this.state.end && this.state.newevent){
             let data = {
@@ -54,13 +62,17 @@ class AdminCalendar extends Component {
                 title: this.state.newevent
             }
             try {
+                // Adding the new event to database
                 const res = await axios.post("http://localhost:8080/events/addevent",  data);
+
+                // ISO Date in MongoDB database should be converted to JavaScript Date format for the calendar.
                 res.data.results.start = new Date(res.data.results.start);
                 res.data.results.end = new Date(res.data.results.end);
+
+                // New event is pushed to eventslist state array
                 this.state.eventslist.push(res.data.results)
                 this.handleCloseAdd(); 
-                console.log(res.data.results);
-               
+                console.log(res.data.results);  
             }catch(error){
                 console.log(error);
             } 
@@ -69,6 +81,7 @@ class AdminCalendar extends Component {
         }        
     }
 
+    // After Edit button is clicked in the "Edit event" modal.
     handleEdit = async() => {
         if(this.state.start && this.state.end && this.state.newevent && this.state.eventid){
             let data = {
@@ -78,13 +91,18 @@ class AdminCalendar extends Component {
                 title: this.state.newevent
             }
             try {
+                // Send event details, so that they can be compared and updated in the database.
                 const res = await axios.post("http://localhost:8080/events/updateevent",  data);
+
+                // ISO Date in MongoDB database should be converted to JavaScript Date format for the calendar.
                 res.data.results.start = new Date(res.data.results.start);
                 res.data.results.end = new Date(res.data.results.end);
+
+                // Update the eventlist array, find the element index with corresponding event ID 
                 let index = this.state.eventslist.findIndex((element)=> element._id === this.state.eventid);
+                // Update with new value from database
                 this.state.eventslist.splice(index, 1, res.data.results)
                 this.handleCloseEdit(); 
-                
                
             }catch(error){
                 console.log(error);
@@ -94,13 +112,16 @@ class AdminCalendar extends Component {
         }        
     }
 
+    // After "Delete" is pressed in "Edit Event" modal
     handleDelete = async() => {
         if(this.state.eventid){
             let data = {
                 eventid: this.state.eventid,
             }
             try {
+                // Delete in database
                 const res = await axios.post("http://localhost:8080/events/deleteevent",  data);
+                // Find and delete in eventslist state array
                 let index = this.state.eventslist.findIndex((element)=> element._id === this.state.eventid);
                 this.state.eventslist.splice(index, 1)
                 this.handleCloseEdit(); 

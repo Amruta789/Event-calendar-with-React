@@ -12,14 +12,16 @@ class UserCalendar extends Component {
         super(props);
         this.state={
           eventslist: [] 
-        };
-        
+        };    
     }
+
+    // Get all the events from database and store in eventslist state variable
     componentDidMount(){
        axios.get("http://localhost:8080/events/allevents/")
        .then((res)=>{
             console.log(res.data);
-            console.log(res.data.events);      
+            console.log(res.data.events);
+            // ISO Date in MongoDB database should be converted to JavaScript Date format for the calendar.      
             res.data.events.forEach(element => {
               element.start=new Date(element.start);
               element.end = new Date(element.end);
@@ -29,15 +31,13 @@ class UserCalendar extends Component {
             console.log(error);
        })
     }
-
-    render() {
-        
+    render() { 
         return (
             <div className="rbc-calendar">
                 <Calendar
                   popup
                   localizer={localizer}
-                  events={ this.state.eventslist}
+                  events={this.state.eventslist}
                   startAccessor="start" 
                   endAccessor="end" 
                 />

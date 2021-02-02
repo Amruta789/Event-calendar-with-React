@@ -14,9 +14,11 @@ class Login extends Component {
     this.handleChange=this.handleChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
   }
+  // Stores input values into corresponding state variables 
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value})
   }
+
   async handleSubmit(e){
     e.preventDefault();
     console.log(this.state);
@@ -31,6 +33,7 @@ class Login extends Component {
       console.log(res.data);
       if(res.data.success){
         alert(res.data.message);
+        // If username is "Admin", then they will be redirected to admin calendar.
         if(res.data.result.username==='Admin')
             window.location.replace('/admincalendar');
         else
@@ -43,9 +46,10 @@ class Login extends Component {
   }
   render() {
     return (
-        <div>
+        <div className="background">
           <div className="form-form">
             <Form>
+              <h1 className="main-heading">Event Calendar</h1>
               <h3 className="form-heading">
                 Login
               </h3>
@@ -57,7 +61,7 @@ class Login extends Component {
               </Form.Group>
               <Link to="/register">Don't have an acccount? Click here to Register.</Link>
               <Form.Group controlId="submitbutton">
-                <Button type="submit" onClick={this.handleSubmit} className="create-account">Next</Button>
+                <Button type="submit" onClick={this.handleSubmit} className="create-account">Login</Button>
               </Form.Group>
             </Form>
           </div>

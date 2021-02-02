@@ -10,12 +10,11 @@ var schemaOptions = {
   }
 };
 
-// Schema stores username, password, email, phone, profile picture path, and messages sent to admin
+// Schema stores events with title, start-date and end-date.
 var eventSchema = new mongoose.Schema({
     title: String,
     start: Date,
     end: Date,
-    allDay: Boolean,
-})    
+}, schemaOptions)    
 var Event = mongoose.model('Event', eventSchema);
 module.exports = Event;

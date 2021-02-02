@@ -10,12 +10,14 @@ var schemaOptions = {
   }
 };
 
-// Schema stores username, password, email, phone, profile picture path, and messages sent to admin
+// Schema stores username and password.
 var userSchema = new mongoose.Schema({
         username: {
             type: String,
             unique: true,
-            required: true
+            required: true,
+            minlength: 4,
+            maxlength: 20
         },
         
         password: {
@@ -40,5 +42,6 @@ var userSchema = new mongoose.Schema({
     userSchema.methods.comparePassword = function(plaintext, callback) {
         return callback(null, bcrypt.compareSync(plaintext, this.password));
     };
+
 var User = mongoose.model('User', userSchema);
 module.exports = User;

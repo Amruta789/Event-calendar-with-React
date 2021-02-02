@@ -14,10 +14,13 @@ class Register extends Component {
     this.handleChange=this.handleChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
   }
+
+  // Stores input values from form into state variables
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value})
   }
 
+  // Check if entered password and confirm password match
   comparePassword=()=>{
       if(this.state.password!==this.state.confirmPassword){
         alert("Password and confirm password don't match")
@@ -25,26 +28,27 @@ class Register extends Component {
       }else
         return true;
   }
+
   async handleSubmit(e){
     e.preventDefault();
     if(this.comparePassword()){
         console.log(this.state);
         const {username,password} = this.state;
-        let data={
+        let data = {
             username,
             password,   
         }
-
         try {
-        const res = await axios.post("http://localhost:8080/users/signup/", data);
-        console.log(res.data);
-        if(res.data.success){
-            alert(res.data.message);
-            window.location.replace('/');
-        }else
-            alert(res.data.err);
+          const res = await axios.post("http://localhost:8080/users/signup/", data);
+          console.log(res.data);
+          if(res.data.success){
+              alert(res.data.message);
+              // After registration, redirect to login
+              window.location.replace('/');
+          }else
+              alert(res.data.err);
         }catch(error){
-        console.log(error);
+          console.log(error);
         }
     }    
   }
@@ -59,7 +63,6 @@ class Register extends Component {
               <Form.Group controlId="username">
                 <Form.Control type="text" className="item" name="username" placeholder="Username" onChange={this.handleChange} />
               </Form.Group>
-              
               <Form.Group controlId="password">
                 <Form.Control type="password"  className="item" name="password" placeholder="Password" onChange={this.handleChange} />
               </Form.Group>
@@ -67,7 +70,7 @@ class Register extends Component {
                 <Form.Control type="password"  className="item" name="confirmPassword" placeholder="Confirm Password" onChange={this.handleChange} />
               </Form.Group>
               <Form.Group controlId="submitbutton">
-                <Button type="submit" onClick={this.handleSubmit} className="create-account">Next</Button>
+                <Button type="submit" onClick={this.handleSubmit} className="create-account">Register</Button>
               </Form.Group>
             </Form>
           </div>
