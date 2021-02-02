@@ -21,7 +21,8 @@ router.post('/signin',async(req, res)=>{
                             success: true,
                             result: {
                                 username: user.username,
-                            }  
+                            },
+                            message: "User login successful"  
                         })
                     }
                 });

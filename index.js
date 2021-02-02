@@ -13,10 +13,11 @@ const logger = require('morgan');
 const users = require('./routes/users');
 const events = require('./routes/events');
 
-app.use(logger('dev'));
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(logger('dev'));
+app.use(cors());
+
 
 app.use('/users', users);
 app.use('/events', events);
