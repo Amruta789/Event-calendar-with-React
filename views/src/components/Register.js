@@ -54,7 +54,7 @@ class Register extends Component {
   }
   render() {
     return (
-        <div>
+        <div className="background">
           <div className="form-form">
             <Form>
               <h3 className="form-heading">
